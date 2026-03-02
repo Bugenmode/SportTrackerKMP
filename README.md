@@ -67,7 +67,3 @@ SportTracker/
 ### iOS
 
 Откройте `iosApp/iosApp.xcodeproj` в Xcode и запустите проект.
-
-## Лицензия
-
-MIT
