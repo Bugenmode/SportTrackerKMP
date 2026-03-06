@@ -1,8 +1,10 @@
 package aleksei.bakycharov.sporttracker.android.ui.components
 
-import aleksei.bakycharov.sporttracker.android.ui.theme.GrayDarkWithBlue
+import aleksei.bakycharov.sporttracker.android.ui.theme.BlueBg
+import aleksei.bakycharov.sporttracker.android.ui.theme.FitnessTrackerTheme
+import aleksei.bakycharov.sporttracker.android.ui.theme.GreenDark
 import aleksei.bakycharov.sporttracker.android.ui.theme.Orange
-import aleksei.bakycharov.sporttracker.android.ui.theme.Teal1
+import aleksei.bakycharov.sporttracker.android.ui.theme.Teal
 import aleksei.bakycharov.sporttracker.android.ui.theme.TextSecondary
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -36,11 +38,14 @@ import androidx.compose.ui.graphics.PathMeasure
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlin.math.roundToInt
 
 @Composable
-fun WeeklyLineChart(
+fun LineChart(
     stepsData: List<Pair<String, Float>>,
     caloriesData: List<Pair<String, Float>>,
     animationPlayed: Boolean,
@@ -57,6 +62,9 @@ fun WeeklyLineChart(
 
     var selectedIndex by remember { mutableStateOf<Int?>(null) }
 
+    val paddingStart = 16f
+    val paddingEnd = 16f
+
     Column(modifier = modifier) {
         Canvas(
             modifier = Modifier
@@ -64,8 +72,10 @@ fun WeeklyLineChart(
                 .height(200.dp)
                 .pointerInput(Unit) {
                     detectTapGestures { offset ->
-                        val stepX = size.width / (stepsData.size - 1).coerceAtLeast(1)
-                        val index = (offset.x / stepX).toInt().coerceIn(0, stepsData.size - 1)
+                        val chartWidth = size.width - paddingStart - paddingEnd
+                        val index = ((offset.x - paddingStart) / chartWidth * (stepsData.size - 1))
+                            .roundToInt()
+                            .coerceIn(0, stepsData.size - 1)
                         selectedIndex = if (selectedIndex == index) null else index
                     }
                 }
@@ -95,9 +105,10 @@ fun WeeklyLineChart(
                 color: Color
             ) {
                 if (data.size < 2) return
+                val chartWidth = width - paddingStart - paddingEnd
                 val points = data.mapIndexed { index, (_, value) ->
                     Offset(
-                        x = width * index / (data.size - 1).coerceAtLeast(1),
+                        x = paddingStart + chartWidth * index / (data.size - 1).coerceAtLeast(1),
                         y = paddingTop + chartHeight * (1 - value / maxValue)
                     )
                 }
@@ -124,11 +135,12 @@ fun WeeklyLineChart(
                 )
             }
 
-            drawSmoothLine(stepsData, maxSteps, Teal1)
+            drawSmoothLine(stepsData, maxSteps, GreenDark)
             drawSmoothLine(caloriesData, maxCalories, Orange)
 
             selectedIndex?.let { index ->
-                val x = width * index / (stepsData.size - 1).coerceAtLeast(1)
+                val chartWidth = width - paddingStart - paddingEnd
+                val x = paddingStart + chartWidth * index / (stepsData.size - 1).coerceAtLeast(1)
                 val stepsY = paddingTop + chartHeight * (1 - stepsData[index].second / maxSteps)
                 val caloriesY = paddingTop + chartHeight * (1 - caloriesData[index].second / maxCalories)
 
@@ -140,7 +152,7 @@ fun WeeklyLineChart(
                     pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
                 )
 
-                drawCircle(Teal1, 6.dp.toPx(), Offset(x, stepsY))
+                drawCircle(GreenDark, 6.dp.toPx(), Offset(x, stepsY))
                 drawCircle(Color.White, 3.dp.toPx(), Offset(x, stepsY))
                 drawCircle(Orange, 6.dp.toPx(), Offset(x, caloriesY))
                 drawCircle(Color.White, 3.dp.toPx(), Offset(x, caloriesY))
@@ -150,7 +162,7 @@ fun WeeklyLineChart(
         selectedIndex?.let { index ->
             Surface(
                 shape = RoundedCornerShape(12.dp),
-                color = GrayDarkWithBlue,
+                color = BlueBg,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
                 Column(modifier = Modifier.padding(12.dp)) {
@@ -174,15 +186,16 @@ fun WeeklyLineChart(
         }
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 4.dp)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             stepsData.forEach { (date, _) ->
                 Text(
                     text = date,
                     fontSize = 10.sp,
-                    color = TextSecondary
+                    color = TextSecondary,
+                    modifier = Modifier.width(36.dp),
+                    textAlign = TextAlign.Center
                 )
             }
         }
@@ -195,7 +208,7 @@ fun WeeklyLineChart(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Canvas(modifier = Modifier.size(8.dp)) {
-                drawCircle(color = Teal1)
+                drawCircle(color = Teal)
             }
             Text(" Шаги", fontSize = 12.sp, color = TextSecondary)
             Spacer(modifier = Modifier.width(16.dp))
@@ -204,5 +217,36 @@ fun WeeklyLineChart(
             }
             Text(" Калории", fontSize = 12.sp, color = TextSecondary)
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun LineChartPreview() {
+    val stepsData = listOf(
+        "20.02" to 3500f,
+        "21.02" to 2800f,
+        "22.02" to 3200f,
+        "23.02" to 1800f,
+        "24.02" to 2500f,
+        "25.02" to 4200f,
+        "26.02" to 4500f
+    )
+    val caloriesData = listOf(
+        "20.02" to 200f,
+        "21.02" to 150f,
+        "22.02" to 180f,
+        "23.02" to 100f,
+        "24.02" to 250f,
+        "25.02" to 300f,
+        "26.02" to 280f
+    )
+
+    FitnessTrackerTheme {
+        LineChart(
+            stepsData = stepsData,
+            caloriesData = caloriesData,
+            animationPlayed = true
+        )
     }
 }

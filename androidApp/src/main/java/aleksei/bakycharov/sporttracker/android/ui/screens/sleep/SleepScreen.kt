@@ -1,4 +1,4 @@
-package aleksei.bakycharov.sporttracker.android.ui.screens
+package aleksei.bakycharov.sporttracker.android.ui.screens.sleep
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,11 +9,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun GoalsScreen() {
+fun SleepScreen() {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text("Цели", fontSize = 24.sp)
+        Text("Сон", fontSize = 24.sp)
     }
 }

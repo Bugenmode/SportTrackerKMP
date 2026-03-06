@@ -1,8 +1,8 @@
 package aleksei.bakycharov.sporttracker.android.ui.components
 
 import aleksei.bakycharov.sporttracker.android.ui.theme.Blue
+import aleksei.bakycharov.sporttracker.android.ui.theme.BlueLightBg
 import aleksei.bakycharov.sporttracker.android.ui.theme.FitnessTrackerTheme
-import aleksei.bakycharov.sporttracker.android.ui.theme.LightBlue
 import aleksei.bakycharov.sporttracker.android.ui.theme.TextSecondary
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateDpAsState
@@ -121,7 +121,7 @@ fun StatCardPreview() {
         StatCard(
             icon = Icons.Filled.DirectionsWalk,
             iconColor = Blue,
-            iconBackground = LightBlue,
+            iconBackground = BlueLightBg,
             title = "Шагов",
             value = "14 426",
             valueColor = Blue,

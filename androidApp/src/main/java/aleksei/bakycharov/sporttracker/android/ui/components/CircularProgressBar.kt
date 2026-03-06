@@ -63,6 +63,7 @@ fun CircularProgressBar(
     }
 
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(

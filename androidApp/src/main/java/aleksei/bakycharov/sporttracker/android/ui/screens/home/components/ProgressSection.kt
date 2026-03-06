@@ -5,7 +5,7 @@ import aleksei.bakycharov.sporttracker.android.ui.theme.Blue
 import aleksei.bakycharov.sporttracker.android.ui.theme.FitnessTrackerTheme
 import aleksei.bakycharov.sporttracker.android.ui.theme.Orange
 import aleksei.bakycharov.sporttracker.android.ui.theme.Purple
-import aleksei.bakycharov.sporttracker.android.ui.theme.Teal1
+import aleksei.bakycharov.sporttracker.android.ui.theme.Teal
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -86,7 +86,7 @@ fun ProgressSection(
                     value = "46",
                     label = "мин",
                     subtitle = "активность",
-                    color = Teal1
+                    color = Teal
                 )
             }
         }

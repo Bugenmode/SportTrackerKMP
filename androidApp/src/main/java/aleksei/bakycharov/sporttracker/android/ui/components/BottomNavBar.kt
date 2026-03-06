@@ -3,7 +3,8 @@ package aleksei.bakycharov.sporttracker.android.ui.components
 import aleksei.bakycharov.sporttracker.android.navigation.Screen
 import aleksei.bakycharov.sporttracker.android.navigation.isCurrentRoute
 import aleksei.bakycharov.sporttracker.android.ui.theme.Blue
-import aleksei.bakycharov.sporttracker.android.ui.theme.LightBlue
+import aleksei.bakycharov.sporttracker.android.ui.theme.BlueLightBg
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FitnessCenter
@@ -42,7 +43,8 @@ fun BottomNavBar(
 
     NavigationBar(
         containerColor = Color.White,
-        tonalElevation = 8.dp
+        tonalElevation = 8.dp,
+        windowInsets = WindowInsets(0),
     ) {
         bottomNavItems.forEach { item ->
             val selected = currentDestination.isCurrentRoute(item.screen)
@@ -67,7 +69,7 @@ fun BottomNavBar(
                     selectedTextColor = Blue,
                     unselectedIconColor = Color.Gray,
                     unselectedTextColor = Color.Gray,
-                    indicatorColor = LightBlue
+                    indicatorColor = BlueLightBg
                 )
             )
         }

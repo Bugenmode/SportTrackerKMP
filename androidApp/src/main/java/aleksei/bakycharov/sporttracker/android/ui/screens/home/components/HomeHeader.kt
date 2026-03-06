@@ -3,7 +3,8 @@ package aleksei.bakycharov.sporttracker.android.ui.screens.home.components
 import aleksei.bakycharov.sporttracker.android.ui.components.GradientHeader
 import aleksei.bakycharov.sporttracker.android.ui.theme.Blue
 import aleksei.bakycharov.sporttracker.android.ui.theme.FitnessTrackerTheme
-import aleksei.bakycharov.sporttracker.android.ui.theme.Purple1
+import aleksei.bakycharov.sporttracker.android.ui.theme.HomeGradient
+import aleksei.bakycharov.sporttracker.android.ui.theme.PurpleDark
 import aleksei.bakycharov.sporttracker.utils.DateHelper
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,7 +39,7 @@ fun HomeHeader() {
     val isToday = selectedDate >= DateHelper.today()
 
     GradientHeader(
-        gradientColors = listOf(Purple1, Blue)
+        gradientColors = HomeGradient
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),

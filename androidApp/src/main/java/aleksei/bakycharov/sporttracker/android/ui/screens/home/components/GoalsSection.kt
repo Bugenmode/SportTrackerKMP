@@ -1,9 +1,9 @@
 package aleksei.bakycharov.sporttracker.android.ui.screens.home.components
 
-import aleksei.bakycharov.sporttracker.android.ui.components.LineChart
+import aleksei.bakycharov.sporttracker.android.ui.components.LinearProgressBar
 import aleksei.bakycharov.sporttracker.android.ui.theme.Blue
-import aleksei.bakycharov.sporttracker.android.ui.theme.BlueLightBg
 import aleksei.bakycharov.sporttracker.android.ui.theme.FitnessTrackerTheme
+import aleksei.bakycharov.sporttracker.android.ui.theme.GreenLight
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.TrendingUp
+import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -36,35 +36,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun WeeklyActivitySection(
+fun GoalsSection(
     modifier: Modifier = Modifier,
-    animationKey: String = ""
+    animationKey: String = "",
 ) {
     var animationPlayed by remember(animationKey) { mutableStateOf(false) }
 
     LaunchedEffect(animationKey) {
         animationPlayed = true
     }
-
-    // Mocks
-    val stepsData = listOf(
-        "20.02" to 3500f,
-        "21.02" to 2800f,
-        "22.02" to 3200f,
-        "23.02" to 1800f,
-        "24.02" to 2500f,
-        "25.02" to 4200f,
-        "26.02" to 4500f
-    )
-    val caloriesData = listOf(
-        "20.02" to 200f,
-        "21.02" to 150f,
-        "22.02" to 180f,
-        "23.02" to 100f,
-        "24.02" to 250f,
-        "25.02" to 300f,
-        "26.02" to 280f
-    )
 
     Card(
         modifier = modifier
@@ -81,26 +61,56 @@ fun WeeklyActivitySection(
             ) {
                 Surface(
                     shape = CircleShape,
-                    color = BlueLightBg
+                    color = Color(0xFFE8F5E9)
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.TrendingUp,
+                        imageVector = Icons.Filled.Flag,
                         contentDescription = null,
                         tint = Blue,
                         modifier = Modifier.padding(8.dp).size(20.dp)
                     )
                 }
                 Text(
-                    text = "Активность за неделю",
+                    text = "Цели",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
+            Spacer(modifier = Modifier.height(20.dp))
+            LinearProgressBar(
+                label = "10,000 steps per day",
+                current = 14426f,
+                target = 10000f,
+                color = GreenLight,
+                animationPlayed = animationPlayed,
+                delay = 0
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            LinearProgressBar(
+                label = "5 workouts per week",
+                current = 2f,
+                target = 5f,
+                color = Blue,
+                animationPlayed = animationPlayed,
+                delay = 150
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            LineChart(
-                stepsData = stepsData,
-                caloriesData = caloriesData,
-                animationPlayed = animationPlayed
+            LinearProgressBar(
+                label = "8 hours of sleep",
+                current = 9.6f,
+                target = 8f,
+                color = GreenLight,
+                animationPlayed = animationPlayed,
+                delay = 300
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            LinearProgressBar(
+                label = "Burn 2,500 calories",
+                current = 0f,
+                target = 2500f,
+                color = Blue,
+                animationPlayed = animationPlayed,
+                delay = 450
             )
         }
     }
@@ -108,8 +118,8 @@ fun WeeklyActivitySection(
 
 @Preview
 @Composable
-fun WeeklyActivitySectionPreview() {
+fun GoalsSectionPreview() {
     FitnessTrackerTheme {
-        WeeklyActivitySection()
+        GoalsSection()
     }
 }

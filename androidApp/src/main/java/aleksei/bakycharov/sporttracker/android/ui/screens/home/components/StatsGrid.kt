@@ -2,8 +2,9 @@ package aleksei.bakycharov.sporttracker.android.ui.screens.home.components
 
 import aleksei.bakycharov.sporttracker.android.ui.components.StatCard
 import aleksei.bakycharov.sporttracker.android.ui.theme.Blue
+import aleksei.bakycharov.sporttracker.android.ui.theme.BlueLightBg
+import aleksei.bakycharov.sporttracker.android.ui.theme.FitnessTrackerTheme
 import aleksei.bakycharov.sporttracker.android.ui.theme.Green
-import aleksei.bakycharov.sporttracker.android.ui.theme.LightBlue
 import aleksei.bakycharov.sporttracker.android.ui.theme.Orange
 import aleksei.bakycharov.sporttracker.android.ui.theme.Purple
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +46,7 @@ fun StatsGrid(
             StatCard(
                 icon = Icons.Filled.DirectionsWalk,
                 iconColor = Blue,
-                iconBackground = LightBlue,
+                iconBackground = BlueLightBg,
                 title = "Шагов",
                 value = "14 426",
                 valueColor = Blue,
@@ -96,5 +97,7 @@ fun StatsGrid(
 @Preview
 @Composable
 fun StatsGridPreview() {
-    StatsGrid()
+    FitnessTrackerTheme {
+        StatsGrid()
+    }
 }

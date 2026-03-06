@@ -1,9 +1,9 @@
 package aleksei.bakycharov.sporttracker.android.navigation
 
-import aleksei.bakycharov.sporttracker.android.ui.screens.GoalsScreen
+import aleksei.bakycharov.sporttracker.android.ui.screens.goals.GoalsScreen
 import aleksei.bakycharov.sporttracker.android.ui.screens.home.HomeScreen
-import aleksei.bakycharov.sporttracker.android.ui.screens.SleepScreen
-import aleksei.bakycharov.sporttracker.android.ui.screens.WorkoutScreen
+import aleksei.bakycharov.sporttracker.android.ui.screens.sleep.SleepScreen
+import aleksei.bakycharov.sporttracker.android.ui.screens.workout.WorkoutScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost

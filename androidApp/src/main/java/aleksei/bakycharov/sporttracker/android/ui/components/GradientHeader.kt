@@ -2,7 +2,7 @@ package aleksei.bakycharov.sporttracker.android.ui.components
 
 import aleksei.bakycharov.sporttracker.android.ui.theme.Blue
 import aleksei.bakycharov.sporttracker.android.ui.theme.FitnessTrackerTheme
-import aleksei.bakycharov.sporttracker.android.ui.theme.Purple1
+import aleksei.bakycharov.sporttracker.android.ui.theme.PurpleDark
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -44,7 +44,7 @@ fun GradientHeader(
 fun HeaderPreview() {
     FitnessTrackerTheme {
         GradientHeader(
-            gradientColors = listOf(Purple1, Blue)
+            gradientColors = listOf(PurpleDark, Blue)
         ) {
 
         }
