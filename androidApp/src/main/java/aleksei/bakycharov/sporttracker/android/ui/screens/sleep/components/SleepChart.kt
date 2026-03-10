@@ -17,9 +17,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -91,10 +96,13 @@ fun SleepChart(
 
                 val measure = PathMeasure()
                 measure.setPath(linePath, false)
+
+                val currentLength = measure.length * animatedProgress
                 val animatedPath = Path()
+
                 measure.getSegment(
                     startDistance = 0f,
-                    stopDistance = measure.length * animatedProgress,
+                    stopDistance = currentLength,
                     destination = animatedPath,
                     startWithMoveTo = true)
 
@@ -104,18 +112,20 @@ fun SleepChart(
                     style = Stroke(width = 2.dp.toPx(), cap = StrokeCap.Round)
                 )
 
-                if (animatedProgress > 0.9f) {
-                    val fillPath = Path().apply {
-                        addPath(linePath)
-                        lineTo(width, height - paddingBottom)
-                        lineTo(0f, height - paddingBottom)
-                        close()
-                    }
-                    drawPath(
-                        path = fillPath,
-                        color = color.copy(alpha = alpha * animatedProgress)
-                    )
+                val lastPosition = measure.getPosition(currentLength)
+
+                val fillPath = Path().apply {
+                    addPath(animatedPath)
+
+                    lineTo(lastPosition.x, height - paddingBottom)
+                    lineTo(0f, height - paddingBottom)
+                    close()
                 }
+
+                drawPath(
+                    path = fillPath,
+                    color = color.copy(alpha = alpha)
+                )
             }
 
             drawAreaChart(totalData, Purple, 0.2f)
@@ -152,6 +162,8 @@ fun SleepChart(
 @Composable
 @Preview
 fun SleepChartPreview() {
+    var animatedPlayed by remember { mutableStateOf(false) }
+
     val totalData = listOf(
         "13.02" to 7.2f, "14.02" to 6.5f, "15.02" to 8.0f, "16.02" to 7.8f,
         "17.02" to 6.0f, "18.02" to 7.5f, "19.02" to 8.2f, "20.02" to 5.5f,
@@ -166,10 +178,19 @@ fun SleepChartPreview() {
     )
 
     FitnessTrackerTheme {
-        SleepChart(
-            totalData = totalData,
-            deepData = deepData,
-            animationPlayed = true
-        )
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            SleepChart(
+                totalData = totalData,
+                deepData = deepData,
+                animationPlayed = animatedPlayed
+            )
+
+            Button(onClick = { animatedPlayed = !animatedPlayed }) {
+                Text("Toggle")
+            }
+        }
     }
 }
